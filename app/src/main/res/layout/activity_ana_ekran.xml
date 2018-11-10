@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/arkaSayfaPlanRengi"
+    tools:context="com.muhammedalmaz.sosyalyardim.AnaEkranActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:hint="Kullanıcı Adı"
+            android:textCursorDrawable="@color/editTextBaslikRengi"
+            android:textSize="20sp"
+            app:met_baseColor="@color/editTextBaslikRengi"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="20"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:hint="Şifre"
+            android:textCursorDrawable="@color/editTextBaslikRengi"
+            android:textSize="20sp"
+            app:met_baseColor="@color/editTextBaslikRengi"
+            app:met_floatingLabel="highlight"
+            app:met_maxCharacters="16"
+            app:met_primaryColor="?colorAccent"
+            app:met_singleLineEllipsis="true" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SosyalYardim</string>
+    <string name="ana_ekran_kullanici_adi">Kullanıcı Adı</string>
+    <string name="ana_ekran_sifre">Şifre</string>
+</resources>
