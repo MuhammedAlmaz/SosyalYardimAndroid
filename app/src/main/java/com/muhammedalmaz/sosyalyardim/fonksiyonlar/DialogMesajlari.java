@@ -2,6 +2,9 @@ package com.muhammedalmaz.sosyalyardim.fonksiyonlar;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import android.content.Context;
+import android.content.Intent;
+
+import com.muhammedalmaz.sosyalyardim.GirisEkranActivity;
 
 /**
  * Created by muhamed on 10.11.2018.
@@ -20,6 +23,7 @@ public class DialogMesajlari {
                 .setContentText(icerik)
                 .setCancelText("Hayır")
                 .setConfirmText("Evet")
+                .showCancelButton(true)
                 .setConfirmClickListener(listener)
                 .show();
     }
@@ -29,6 +33,7 @@ public class DialogMesajlari {
                 .setContentText("Devam Etmek İstiyor musunuz?")
                 .setCancelText("Hayır")
                 .setConfirmText("Evet")
+                .showCancelButton(true)
                 .setConfirmClickListener(listener)
                 .show();
     }
@@ -66,10 +71,16 @@ public class DialogMesajlari {
             return false;
         }else if(hataKodu==1)
         {
-            hataMesaji="Bilgileri Eksik Girdiniz";
-        }else
+            hataMesaji="Bilgileri eksik girdiniz";
+        }else if(hataKodu==2)
         {
-            hataMesaji="Yetkisiz Giriş Sağlandı";
+            hataMesaji="Kullanıcı adınız veya şifreniz hatalı";
+        }else if(hataKodu==3)
+        {
+            hataMesaji="Yetkisiz işlem , lütfen tekrar giriş yapınız.";
+            context.startActivity(new Intent(context, GirisEkranActivity.class));
+        }else{
+            hataMesaji="?????";
         }
 
         new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)

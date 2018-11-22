@@ -1,51 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/arkaSayfaPlanRengi"
-    tools:context="com.muhammedalmaz.sosyalyardim.AnaEkranActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
 
-    <LinearLayout
+
+    <include
+        layout="@layout/app_bar_ana_ekran"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:layout_height="match_parent" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:hint="Kullanıcı Adı"
-            android:textCursorDrawable="@color/editTextBaslikRengi"
-            android:textSize="20sp"
-            app:met_baseColor="@color/editTextBaslikRengi"
-            app:met_floatingLabel="highlight"
-            app:met_maxCharacters="20"
-            app:met_primaryColor="?colorAccent"
-            app:met_singleLineEllipsis="true" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:hint="Şifre"
-            android:textCursorDrawable="@color/editTextBaslikRengi"
-            android:textSize="20sp"
-            app:met_baseColor="@color/editTextBaslikRengi"
-            app:met_floatingLabel="highlight"
-            app:met_maxCharacters="16"
-            app:met_primaryColor="?colorAccent"
-            app:met_singleLineEllipsis="true" />
-    </LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_ana_ekran"
+        app:menu="@menu/activity_ana_ekran_drawer" />
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
