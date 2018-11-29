@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.muhammedalmaz.sosyalyardim.fragmentler.SubeDuzenleFragment">
+    tools:context="com.muhammedalmaz.sosyalyardim.fragmentler.SubeEkleFragment">
 
 
     <LinearLayout
@@ -29,16 +29,16 @@
 
 
         <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/BtnGuncelle"
+            android:id="@+id/BtnSubeEkle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            app:bootstrapBrand="warning"
+            app:bootstrapBrand="success"
             app:bootstrapSize="lg"
             app:buttonMode="regular"
             app:showOutline="false"
             app:roundedCorners="true"
-            android:text="Güncelle" />
+            android:text="ŞUBE EKLE" />
     </LinearLayout>
 </RelativeLayout>

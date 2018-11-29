@@ -1,0 +1,11 @@
+package com.muhammedalmaz.sosyalyardim.onaylayici;
+
+public enum OnaylayiciTip {
+    SIFRE_SEKIZ_KARAKTERLI,
+    SIFRE_EN_AZ_BIR_KARAKTER_BUYUK_KUCUK,
+    SIFRE_EN_AZ_BIR_KARAKTER_BUYUK_KUCUK_SAYI,
+    SIFRE_EN_AZ_BIR_KARAKTER_BUYUK_KUCUK_SAYI_SEMBOL,
+    EMAIL,
+    TC_KIMLIK_NUMARASI,
+    KREDI_KARTI
+}

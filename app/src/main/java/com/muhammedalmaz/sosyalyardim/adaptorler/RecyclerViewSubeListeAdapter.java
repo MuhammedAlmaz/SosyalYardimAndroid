@@ -58,6 +58,10 @@ public class RecyclerViewSubeListeAdapter extends RecyclerView.Adapter<RecyclerV
         holder.lblSubeIl.setText(sube.getSubeIl());
     }
 
+    public void listeyiGuncelle() {
+        notifyDataSetChanged();
+    }
+
     public void removeItem(int position) {
         subeList.remove(position);
         notifyItemRemoved(position);

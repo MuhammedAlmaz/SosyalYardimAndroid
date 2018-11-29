@@ -1,7 +1,6 @@
 package com.muhammedalmaz.sosyalyardim.fragmentler;
 
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
@@ -25,11 +23,11 @@ import com.muhammedalmaz.sosyalyardim.pojo.KullaniciSpinnerSonuc;
 import com.muhammedalmaz.sosyalyardim.pojo.SehirSpinner;
 import com.muhammedalmaz.sosyalyardim.pojo.SehirSpinnerSonuc;
 import com.muhammedalmaz.sosyalyardim.pojo.Sube;
+import com.muhammedalmaz.sosyalyardim.pojo.SubeEkleSonuc;
 import com.muhammedalmaz.sosyalyardim.pojo.SubeGuncelleSonuc;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,10 +36,10 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SubeDuzenleFragment extends Fragment {
+public class SubeEkleFragment extends Fragment {
 
 
-    private String TAG = SubeDuzenleFragment.class.getName();
+    private String TAG = SubeEkleFragment.class.getName();
     private Sube sube;
     APIInterface apiInterface;
     DialogMesajlari dialogMesajlari;
@@ -50,17 +48,8 @@ public class SubeDuzenleFragment extends Fragment {
     ArrayList<String> kullaniciListe = new ArrayList<String>();
     ArrayList<SehirSpinner> sehirSpinnerArrayList;
     ArrayList<KullaniciSpinner> kullaniciSpinnerArrayList;
-    int seciliIlPosition=0;
-    int seciliGorevliPosition=0;
-
-    @SuppressLint("UseSparseArrays")
-    public SubeDuzenleFragment() {
-    }
-
-    @SuppressLint("ValidFragment")
-    public SubeDuzenleFragment(Sube sube) {
+    public SubeEkleFragment() {
         // Required empty public constructor
-        this.sube = sube;
     }
 
     public void spinnerDoldur() {
@@ -76,20 +65,11 @@ public class SubeDuzenleFragment extends Fragment {
                 {
                     SehirSpinner sehirSpinner=sehirSpinnerArrayList.get(i);
                     sehirListe.add(sehirSpinner.getAd());
-                    if(sehirSpinner.getId()==sube.getIlId())
-                    {
-                        seciliIlPosition=i;
-                    }
                 }
                 kullaniciSpinnerArrayList = kullaniciSpinnerSonuc.kullaniciSpinnerArrayList;
                 for(int i=0;i<kullaniciSpinnerArrayList.size();i++) {
                     KullaniciSpinner kullaniciSpinner = kullaniciSpinnerArrayList.get(i);
                     kullaniciListe.add(kullaniciSpinner.getAd());
-                    if(sube.getGorevliId()==kullaniciSpinner.getId())
-                    {
-                        seciliGorevliPosition=i;
-                    }
-
                 }
             }
         } catch (IOException e) {
@@ -99,11 +79,13 @@ public class SubeDuzenleFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_sube_duzenle, container, false);
+        View fragmentView= inflater.inflate(R.layout.fragment_sube_ekle, container, false);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
@@ -122,29 +104,21 @@ public class SubeDuzenleFragment extends Fragment {
 
         spinnerSubeGorevlisi.setAdapter(spinnerArrayAdapterKullanici);
         spinnerSubeIl.setAdapter(spinnerArrayAdapterSehir);
-        Log.e(TAG,seciliGorevliPosition+"");
-        Log.e(TAG,seciliIlPosition+"");
-
-        spinnerSubeGorevlisi.setSelection(seciliGorevliPosition);
-        spinnerSubeIl.setSelection(seciliIlPosition);
 
 
-        ((BootstrapButton)fragmentView.findViewById(R.id.BtnGuncelle)).setOnClickListener(new View.OnClickListener() {
+        ((BootstrapButton)fragmentView.findViewById(R.id.BtnSubeEkle)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Call<SubeGuncelleSonuc> subeGuncelleSonucCall=apiInterface.subeGuncelle(HesapBilgileri.androidToken,
-                        sube.getSubeId(),
+                Call<SubeEkleSonuc> subeEkleSonucCall=apiInterface.subeEkle(HesapBilgileri.androidToken,
                         sehirSpinnerArrayList.get(spinnerSubeIl.getSelectedItemPosition()).getId(),
                         kullaniciSpinnerArrayList.get(spinnerSubeGorevlisi.getSelectedItemPosition()).getId()
-                        );
-                subeGuncelleSonucCall.enqueue(new Callback<SubeGuncelleSonuc>() {
+                );
+                subeEkleSonucCall.enqueue(new Callback<SubeEkleSonuc>() {
                     @Override
-                    public void onResponse(Call<SubeGuncelleSonuc> call, Response<SubeGuncelleSonuc> response) {
-                        SubeGuncelleSonuc subeGuncelleSonuc=response.body();
-                        if(!dialogMesajlari.hataMesajiGoster(subeGuncelleSonuc.hataKodu))
+                    public void onResponse(Call<SubeEkleSonuc> call, Response<SubeEkleSonuc> response) {
+                        SubeEkleSonuc subeEkleSonuc=response.body();
+                        if(!dialogMesajlari.hataMesajiGoster(subeEkleSonuc.hataKodu))
                         {
-
-
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             fragmentManager
                                     .beginTransaction()
@@ -155,15 +129,13 @@ public class SubeDuzenleFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<SubeGuncelleSonuc> call, Throwable t) {
+                    public void onFailure(Call<SubeEkleSonuc> call, Throwable t) {
                         call.cancel();
                         dialogMesajlari.hataMesajiGoster();
                     }
                 });
             }
         });
-
-
         return fragmentView;
     }
 

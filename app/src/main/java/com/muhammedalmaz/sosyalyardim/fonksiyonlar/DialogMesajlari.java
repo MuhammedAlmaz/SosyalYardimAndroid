@@ -79,6 +79,10 @@ public class DialogMesajlari {
         {
             hataMesaji="Yetkisiz işlem , lütfen tekrar giriş yapınız.";
             context.startActivity(new Intent(context, GirisEkranActivity.class));
+        }else if(hataKodu==4)
+        {
+            hataMesaji="İşlem Başarısız";
+            context.startActivity(new Intent(context, GirisEkranActivity.class));
         }else{
             hataMesaji="?????";
         }

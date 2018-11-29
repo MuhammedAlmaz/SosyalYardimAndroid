@@ -7,11 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.nfc.Tag;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,48 +22,55 @@ import android.view.ViewGroup;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.muhammedalmaz.sosyalyardim.R;
-import com.muhammedalmaz.sosyalyardim.adaptorler.RecyclerViewSubeListeAdapter;
+import com.muhammedalmaz.sosyalyardim.adaptorler.RecyclerViewKullaniciListeAdapter;
 import com.muhammedalmaz.sosyalyardim.api.APIClient;
 import com.muhammedalmaz.sosyalyardim.api.APIInterface;
 import com.muhammedalmaz.sosyalyardim.ekstralar.HesapBilgileri;
 import com.muhammedalmaz.sosyalyardim.fonksiyonlar.DialogMesajlari;
-import com.muhammedalmaz.sosyalyardim.pojo.Sube;
-import com.muhammedalmaz.sosyalyardim.pojo.SubeListeSonuc;
-import com.muhammedalmaz.sosyalyardim.pojo.SubeSilmeSonuc;
+import com.muhammedalmaz.sosyalyardim.pojo.Kullanici;
+import com.muhammedalmaz.sosyalyardim.pojo.KullaniciListeSonuc;
+import com.muhammedalmaz.sosyalyardim.pojo.KullaniciSilmeSonuc;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class KullaniciFragment extends Fragment {
 
-public class SubeFragment extends Fragment {
+    String TAG=KullaniciFragment.class.getName();
     APIInterface apiInterface;
-    RecyclerViewSubeListeAdapter recyclerViewSubeListeAdapter;
-    RecyclerView recyclerSubeListe;
+    RecyclerViewKullaniciListeAdapter recyclerViewKullaniciListeAdapter;
+    RecyclerView recyclerKullaniciListe;
     DialogMesajlari dialogMesajlari;
 
-    public SubeFragment() {
+    public KullaniciFragment() {
+        // Required empty public constructor
     }
 
-    public void subeleriYukle() {
-        Call<SubeListeSonuc> subeListeSonucCall = apiInterface.subeListe(HesapBilgileri.androidToken);
-        subeListeSonucCall.enqueue(new Callback<SubeListeSonuc>() {
+    public void kullanicileriYukle() {
+        Call<KullaniciListeSonuc> kullaniciListeSonucCall = apiInterface.kullaniciListe(HesapBilgileri.androidToken);
+        kullaniciListeSonucCall.enqueue(new Callback<KullaniciListeSonuc>() {
             @Override
-            public void onResponse(Call<SubeListeSonuc> call, Response<SubeListeSonuc> response) {
-                SubeListeSonuc subeListeSonuc = response.body();
-                if (!dialogMesajlari.hataMesajiGoster(subeListeSonuc.hataKodu)) {
-                    recyclerViewSubeListeAdapter = new RecyclerViewSubeListeAdapter(subeListeSonuc.subeListe, getActivity());
+            public void onResponse(Call<KullaniciListeSonuc> call, Response<KullaniciListeSonuc> response) {
+                KullaniciListeSonuc kullaniciListeSonuc = response.body();
+                if (!dialogMesajlari.hataMesajiGoster(kullaniciListeSonuc.hataKodu)) {
+                    recyclerViewKullaniciListeAdapter = new RecyclerViewKullaniciListeAdapter(kullaniciListeSonuc.kullaniciListe, getActivity());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    recyclerSubeListe.setLayoutManager(mLayoutManager);
-                    recyclerSubeListe.setItemAnimator(new DefaultItemAnimator());
-                    recyclerSubeListe.setAdapter(recyclerViewSubeListeAdapter);
+                    recyclerKullaniciListe.setLayoutManager(mLayoutManager);
+                    recyclerKullaniciListe.setItemAnimator(new DefaultItemAnimator());
+                    recyclerKullaniciListe.setAdapter(recyclerViewKullaniciListeAdapter);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<SubeListeSonuc> call, Throwable t) {
+            public void onFailure(Call<KullaniciListeSonuc> call, Throwable t) {
+                Log.e(TAG,"Hata Oldu");
+                Log.e(TAG,t.getMessage());
                 call.cancel();
                 dialogMesajlari.hataMesajiGoster();
             }
@@ -72,14 +78,17 @@ public class SubeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_sube, container, false);
-        recyclerSubeListe = fragmentView.findViewById(R.id.RecyclerSubeListe);
+        View fragmentView= inflater.inflate(R.layout.fragment_kullanici, container, false);
+
+
+
+        recyclerKullaniciListe = fragmentView.findViewById(R.id.RecyclerKullaniciListe);
         apiInterface = APIClient.getClient().create(APIInterface.class);
         dialogMesajlari = new DialogMesajlari(getActivity());
-        subeleriYukle();
+        kullanicileriYukle();
 
         ItemTouchHelper.SimpleCallback simpleCallbackSil = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -90,27 +99,27 @@ public class SubeFragment extends Fragment {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition();
-                final Sube sube = recyclerViewSubeListeAdapter.getItem(position);
+                final Kullanici kullanici = recyclerViewKullaniciListeAdapter.getItem(position);
                 if (direction == ItemTouchHelper.LEFT) {
-                    recyclerViewSubeListeAdapter.listeyiGuncelle();
+                    recyclerViewKullaniciListeAdapter.listeyiGuncelle();
                     dialogMesajlari.evetHayirDialogGoster("Şubeyi Silmek Istediğinizden Emin Misiniz", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismissWithAnimation();
-                            Call<SubeSilmeSonuc> subeSilmeSonucCall = apiInterface.subeSil(HesapBilgileri.androidToken
-                                    , sube.getSubeId());
-                            subeSilmeSonucCall.enqueue(new Callback<SubeSilmeSonuc>() {
+                            Call<KullaniciSilmeSonuc> kullaniciSilmeSonucCall = apiInterface.kullaniciSil(HesapBilgileri.androidToken
+                                    , kullanici.getKullaniciID());
+                            kullaniciSilmeSonucCall.enqueue(new Callback<KullaniciSilmeSonuc>() {
                                 @Override
-                                public void onResponse(Call<SubeSilmeSonuc> call, Response<SubeSilmeSonuc> response) {
-                                    SubeSilmeSonuc subeListeSonuc = response.body();
-                                    if (!dialogMesajlari.hataMesajiGoster(subeListeSonuc.hataKodu)) {
-                                        subeleriYukle();
+                                public void onResponse(Call<KullaniciSilmeSonuc> call, Response<KullaniciSilmeSonuc> response) {
+                                    KullaniciSilmeSonuc kullaniciListeSonuc = response.body();
+                                    if (!dialogMesajlari.hataMesajiGoster(kullaniciListeSonuc.hataKodu)) {
+                                        kullanicileriYukle();
                                         dialogMesajlari.basariliIslemDialogGoster();
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<SubeSilmeSonuc> call, Throwable t) {
+                                public void onFailure(Call<KullaniciSilmeSonuc> call, Throwable t) {
                                     call.cancel();
                                     dialogMesajlari.hataMesajiGoster();
                                 }
@@ -159,14 +168,14 @@ public class SubeFragment extends Fragment {
                 if (direction == ItemTouchHelper.RIGHT) {
 
 
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                   /* FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager
                             .beginTransaction()
                             .replace(
-                                    R.id.ContentFrame, new SubeDuzenleFragment(
-                                            recyclerViewSubeListeAdapter.getItem(position))
-                                    , "SubeDuzenleFragment"
-                            ).commit();
+                                    R.id.ContentFrame, new KullaniciDuzenleFragment(
+                                            recyclerViewKullaniciListeAdapter.getItem(position))
+                                    , "KullaniciDuzenleFragment"
+                            ).commit();*/
                 }
             }
 
@@ -199,20 +208,22 @@ public class SubeFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelperSil = new ItemTouchHelper(simpleCallbackSil);
         ItemTouchHelper itemTouchHelperDuzenle = new ItemTouchHelper(simpleCallbackDuzenle);
-        itemTouchHelperSil.attachToRecyclerView(recyclerSubeListe);
-        itemTouchHelperDuzenle.attachToRecyclerView(recyclerSubeListe);
+        itemTouchHelperSil.attachToRecyclerView(recyclerKullaniciListe);
+        itemTouchHelperDuzenle.attachToRecyclerView(recyclerKullaniciListe);
 
-        ((BootstrapButton)fragmentView.findViewById(R.id.BtnSubeEkle)).setOnClickListener(new View.OnClickListener() {
+        ((BootstrapButton)fragmentView.findViewById(R.id.BtnKullaniciEkle)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager
                         .beginTransaction()
                         .replace(
-                                R.id.ContentFrame, new SubeEkleFragment(), "SubeEkleFragment"
-                        ).commit();
+                                R.id.ContentFrame, new KullaniciEkleFragment(), "KullaniciEkleFragment"
+                        ).commit();*/
             }
         });
+        
+        
         return fragmentView;
     }
 

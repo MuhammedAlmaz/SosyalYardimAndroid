@@ -25,6 +25,7 @@ import retrofit2.Response;
 
 public class GirisEkranActivity extends AppCompatActivity {
     int hataKodu=-1;
+    public GirisEkranActivity(){}
     public GirisEkranActivity(int hataKodu){
         this.hataKodu=hataKodu;
     }

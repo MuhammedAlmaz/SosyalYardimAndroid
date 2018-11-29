@@ -43,4 +43,8 @@ dependencies {
     compile 'com.beardedhen:androidbootstrap:2.3.2' //Button TextView vs.
     compile 'cn.pedant.sweetalert:library:1.2' //Dialoglar
     compile 'com.google.code.gson:gson:2.8.2'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

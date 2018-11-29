@@ -1,8 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.muhammedalmaz.sosyalyardim.fragmentler.SubeFragment">
+
+   <com.beardedhen.androidbootstrap.BootstrapButton
+
+       android:id="@+id/BtnSubeEkle"
+       android:layout_width="wrap_content"
+       android:layout_height="50dp"
+       android:layout_marginTop="5dp"
+       android:layout_marginBottom="10dp"
+       android:text="Şube Ekle"
+       tools:text="Şube Ekle"
+       app:bootstrapBrand="primary"
+       app:bootstrapSize="lg"
+       app:buttonMode="regular"
+       app:showOutline="true"
+       app:roundedCorners="true" />
 
    <android.support.v7.widget.RecyclerView
        android:id="@+id/RecyclerSubeListe"
@@ -11,4 +28,4 @@
 
    </android.support.v7.widget.RecyclerView>
 
-</RelativeLayout>
+</LinearLayout>

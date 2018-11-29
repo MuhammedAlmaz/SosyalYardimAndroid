@@ -29,6 +29,9 @@
         <item
             android:id="@+id/NavEsyaIslemleri"
             android:title="Eşya İşlemleri" />
+        <item
+            android:id="@+id/NavCikisYap"
+            android:title="Çıkış Yap" />
     </group>
 
     <!--

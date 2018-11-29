@@ -1,6 +1,9 @@
 package com.muhammedalmaz.sosyalyardim;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +22,7 @@ import android.support.v4.app.Fragment;
 import com.muhammedalmaz.sosyalyardim.adaptorler.TabAdapter;
 import com.muhammedalmaz.sosyalyardim.ekstralar.HesapBilgileri;
 import com.muhammedalmaz.sosyalyardim.fragmentler.AnaSayfaFragment;
+import com.muhammedalmaz.sosyalyardim.fragmentler.KullaniciFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.SubeFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.TABFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.OBISFragment;
@@ -80,6 +84,14 @@ public class AnaEkranActivity extends AppCompatActivity
                 break;
             case R.id.NavSubeIslemleri:
                 transaction.replace(R.id.ContentFrame, new SubeFragment(), "SubeFragment");
+                break;
+            case R.id.NavKullanici:
+                transaction.replace(R.id.ContentFrame, new KullaniciFragment(), "KullaniciFragment");
+                break;
+            case R.id.NavCikisYap:
+                SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                preferences.edit().remove("KullaniciBilgileri").apply();
+                startActivity(new Intent(AnaEkranActivity.this,GirisEkranActivity.class));
                 break;
             default:
                 transaction.replace(R.id.ContentFrame, new AnaSayfaFragment(), "AnaSayfaFragment");

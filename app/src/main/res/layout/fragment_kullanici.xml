@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.muhammedalmaz.sosyalyardim.fragmentler.KullaniciFragment">
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+
+        android:id="@+id/BtnKullaniciEkle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="Kullanıcı Ekle"
+        tools:text="Kullanıcı Ekle"
+        app:bootstrapBrand="primary"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:showOutline="true"
+        app:roundedCorners="true" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/RecyclerKullaniciListe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
