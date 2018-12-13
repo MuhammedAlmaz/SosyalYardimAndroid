@@ -16,7 +16,7 @@ public class Kontrol implements IKontrol{
         Boolean Sonuc=false;
         EditText editText=nesne.editText;
         int karakterSayisi=editText.getText().length();
-        if(karakterSayisi>nesne.ayarlar.getMinimumKarakterSayisi()&&karakterSayisi<nesne.ayarlar.getMaksimumKarakterSayisi())
+        if(karakterSayisi>=nesne.ayarlar.getMinimumKarakterSayisi()&&karakterSayisi<=nesne.ayarlar.getMaksimumKarakterSayisi())
         {
             try {
                 if (nesne.ayarlar.onaylayiciTip == OnaylayiciTip.EMAIL) {
@@ -89,7 +89,6 @@ public class Kontrol implements IKontrol{
                             break;
                         }
                     }
-
                 }else if(nesne.ayarlar.onaylayiciTip==OnaylayiciTip.SIFRE_SEKIZ_KARAKTERLI){
                     return editText.getText().toString().length()>=8;
                 }else if(nesne.ayarlar.onaylayiciTip==OnaylayiciTip.SIFRE_EN_AZ_BIR_KARAKTER_BUYUK_KUCUK)
@@ -150,6 +149,8 @@ public class Kontrol implements IKontrol{
                             Sonuc=true;
                         }
                     }
+                }else if(nesne.ayarlar.onaylayiciTip==OnaylayiciTip.NORMAL_YAZI){
+                    Sonuc=true;
                 }
             }catch (Exception err)
             {
@@ -157,7 +158,6 @@ public class Kontrol implements IKontrol{
                 return false;
             }
         }
-
         return Sonuc;
     }
 

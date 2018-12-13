@@ -1,20 +1,16 @@
 package com.muhammedalmaz.sosyalyardim.fragmentler;
 
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.muhammedalmaz.sosyalyardim.R;
@@ -26,10 +22,7 @@ import com.muhammedalmaz.sosyalyardim.onaylayici.Ayarlar;
 import com.muhammedalmaz.sosyalyardim.onaylayici.OnaylanacakNesne;
 import com.muhammedalmaz.sosyalyardim.onaylayici.Onaylayici;
 import com.muhammedalmaz.sosyalyardim.onaylayici.OnaylayiciTip;
-import com.muhammedalmaz.sosyalyardim.pojo.Kullanici;
-import com.muhammedalmaz.sosyalyardim.pojo.KullaniciGuncelleSonuc;
-import com.muhammedalmaz.sosyalyardim.pojo.KullaniciSpinner;
-import com.muhammedalmaz.sosyalyardim.pojo.KullaniciSpinnerSonuc;
+import com.muhammedalmaz.sosyalyardim.pojo.KullaniciEkleSonuc;
 import com.muhammedalmaz.sosyalyardim.pojo.SehirSpinner;
 import com.muhammedalmaz.sosyalyardim.pojo.SehirSpinnerSonuc;
 
@@ -43,17 +36,11 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class KullaniciDuzenleFragment extends Fragment {
+public class KullaniciEkleFragment extends Fragment {
 
-    Kullanici kullanici;
 
-    public KullaniciDuzenleFragment() {
+    public KullaniciEkleFragment() {
         // Required empty public constructor
-    }
-
-    @SuppressLint("ValidFragment")
-    public KullaniciDuzenleFragment(Kullanici kullanici) {
-        this.kullanici = kullanici;
     }
 
     APIInterface apiInterface;
@@ -61,7 +48,6 @@ public class KullaniciDuzenleFragment extends Fragment {
     ArrayList<String> sehirListe = new ArrayList<String>();
     ArrayList<SehirSpinner> sehirSpinnerArrayList;
 
-    int seciliSehirPozisyon=0;
 
     public void spinnerDoldur() {
         Call<SehirSpinnerSonuc> sehirSpinnerSonucCall = apiInterface.sehirSpinnerGetir(HesapBilgileri.androidToken);
@@ -72,10 +58,7 @@ public class KullaniciDuzenleFragment extends Fragment {
                 for (int i = 0; i < sehirSpinnerArrayList.size(); i++) {
                     SehirSpinner sehirSpinner = sehirSpinnerArrayList.get(i);
                     sehirListe.add(sehirSpinner.getAd());
-                    if(sehirSpinner.getId()==kullanici.getSehirId())
-                    {
-                        seciliSehirPozisyon=i;
-                    }
+                   
                 }
             }
         } catch (IOException e) {
@@ -110,7 +93,7 @@ public class KullaniciDuzenleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_kullanici_duzenle, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_kullanici_ekle, container, false);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -130,15 +113,7 @@ public class KullaniciDuzenleFragment extends Fragment {
         txtTelegramKullaniciAdi = (EditText) fragmentView.findViewById(R.id.TxtTelegramKullaniciAdi);
         txtTcKimlikNo = (EditText) fragmentView.findViewById(R.id.TxtTcKimlikNo);
         txtTelNo = (EditText) fragmentView.findViewById(R.id.TxtTelNo);
-
-        txtKullaniciAdi.setText(kullanici.getKullaniciAdi());
-        txtKullaniciSoyadi.setText(kullanici.getKullaniciSoyadi());
-        txtEPosta.setText(kullanici.getePosta());
-        txtTelegramKullaniciAdi.setText(kullanici.getTelegramKullaniciAdi());
-        txtTcKimlikNo.setText(kullanici.getTcKimlikNo());
-        txtTelNo.setText(kullanici.getTel());
-
-
+;
         spinnerDoldur();
 
         ArrayAdapter<String> spinnerArrayAdapterSehir = new ArrayAdapter<String>(
@@ -160,19 +135,14 @@ public class KullaniciDuzenleFragment extends Fragment {
         spinnerOnayli.setAdapter(spinnerOnayliAdapter);
         spinnerMerkezde.setAdapter(spinnerMerkezdeAdapter);
 
-        spinnerSehir.setSelection(seciliSehirPozisyon);
-        spinnerOnayli.setSelection(kullanici.getOnayli());
-        spinnerMerkezde.setSelection(kullanici.getMerkezde());
-
-
         onaylayiciSinifiniOlustur();
 
-        ((BootstrapButton) fragmentView.findViewById(R.id.BtnKullaniciGuncelle)).setOnClickListener(new Onaylayici(getActivity(),
+        ((BootstrapButton) fragmentView.findViewById(R.id.BtnKullaniciEkle)).setOnClickListener(new Onaylayici(getActivity(),
                 onaylanacakNesneArrayList) {
             @Override
             public void basarili() {
-                Call<KullaniciGuncelleSonuc> kullaniciGuncelleSonucCall=apiInterface.kullaniciGuncelle(
-                        HesapBilgileri.androidToken,kullanici.getKullaniciID()
+                Call<KullaniciEkleSonuc> kullaniciEkleSonucCall=apiInterface.kullaniciEkle(
+                        HesapBilgileri.androidToken
                         ,sehirSpinnerArrayList.get(spinnerSehir.getSelectedItemPosition()).getId()
                         ,txtEPosta.getText().toString().trim()
                         ,txtTelegramKullaniciAdi.getText().toString().trim()
@@ -183,11 +153,11 @@ public class KullaniciDuzenleFragment extends Fragment {
                         ,txtKullaniciAdi.getText().toString().trim()
                         ,txtKullaniciSoyadi.getText().toString().trim()
                 );
-                kullaniciGuncelleSonucCall.enqueue(new Callback<KullaniciGuncelleSonuc>() {
+                kullaniciEkleSonucCall.enqueue(new Callback<KullaniciEkleSonuc>() {
                     @Override
-                    public void onResponse(Call<KullaniciGuncelleSonuc> call, Response<KullaniciGuncelleSonuc> response) {
-                        KullaniciGuncelleSonuc kullaniciGuncelleSonuc=response.body();
-                        if(!dialogMesajlari.hataMesajiGoster(kullaniciGuncelleSonuc.hataKodu)){
+                    public void onResponse(Call<KullaniciEkleSonuc> call, Response<KullaniciEkleSonuc> response) {
+                        KullaniciEkleSonuc kullaniciEkleSonuc=response.body();
+                        if(!dialogMesajlari.hataMesajiGoster(kullaniciEkleSonuc.hataKodu)){
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             fragmentManager
                                     .beginTransaction()
@@ -198,7 +168,9 @@ public class KullaniciDuzenleFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<KullaniciGuncelleSonuc> call, Throwable t) {
+                    public void onFailure(Call<KullaniciEkleSonuc> call, Throwable t) {
+                        call.cancel();
+                        dialogMesajlari.hataMesajiGoster();
 
                     }
                 });

@@ -45,6 +45,15 @@ public class GirisEkranActivity extends AppCompatActivity {
             Gson gson=new Gson();
             KullaniciBilgileri kullaniciBilgileri=gson.fromJson(kayitliKullaniciBilgileri,KullaniciBilgileri.class);
             HesapBilgileri.androidToken=kullaniciBilgileri.androidToken;
+            HesapBilgileri.yetkiKullaniciListesi=kullaniciBilgileri.yetkiKullaniciListesi;
+            HesapBilgileri.yetkiKullaniciEkle=kullaniciBilgileri.yetkiKullaniciEkle;
+            HesapBilgileri.yetkiKullaniciSil=kullaniciBilgileri.yetkiKullaniciSil;
+            HesapBilgileri.yetkiKullaniciDuzenle=kullaniciBilgileri.yetkiKullaniciDuzenle;
+            HesapBilgileri.yetkiSubeListesi=kullaniciBilgileri.yetkiSubeListesi;
+            HesapBilgileri.yetkiSubeEkle=kullaniciBilgileri.yetkiSubeEkle;
+            HesapBilgileri.yetkiSubeSil=kullaniciBilgileri.yetkiSubeSil;
+            HesapBilgileri.yetkiSubeDuzenle=kullaniciBilgileri.yetkiSubeDuzenle;
+            HesapBilgileri.yetkiSubeDetay=kullaniciBilgileri.yetkiSubeDetay;
             HesapBilgileri.kullaniciAdiSoyadi=kullaniciBilgileri.kullaniciAdi+" "+kullaniciBilgileri.kullaniciSoyadi;
             startActivity(new Intent(GirisEkranActivity.this,AnaEkranActivity.class));
             return;

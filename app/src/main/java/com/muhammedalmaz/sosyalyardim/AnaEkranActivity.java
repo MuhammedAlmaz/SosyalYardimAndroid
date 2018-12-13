@@ -22,11 +22,15 @@ import android.support.v4.app.Fragment;
 import com.muhammedalmaz.sosyalyardim.adaptorler.TabAdapter;
 import com.muhammedalmaz.sosyalyardim.ekstralar.HesapBilgileri;
 import com.muhammedalmaz.sosyalyardim.fragmentler.AnaSayfaFragment;
+import com.muhammedalmaz.sosyalyardim.fragmentler.EsyaDepoFragment;
+import com.muhammedalmaz.sosyalyardim.fragmentler.EsyaFragment;
+import com.muhammedalmaz.sosyalyardim.fragmentler.IhtiyacSahibiFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.KullaniciFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.SubeFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.TABFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.OBISFragment;
 import com.muhammedalmaz.sosyalyardim.fragmentler.TEBFragment;
+import com.muhammedalmaz.sosyalyardim.fragmentler.YetkilerimFragment;
 
 public class AnaEkranActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,6 +91,18 @@ public class AnaEkranActivity extends AppCompatActivity
                 break;
             case R.id.NavKullanici:
                 transaction.replace(R.id.ContentFrame, new KullaniciFragment(), "KullaniciFragment");
+                break;
+            case R.id.NavYetkiIslemleri:
+                transaction.replace(R.id.ContentFrame, new YetkilerimFragment(), "YetkilerimFragment");
+                break;
+            case R.id.NavIhtiyacSahibi:
+                transaction.replace(R.id.ContentFrame, new IhtiyacSahibiFragment(), "IhtiyacSahibiFragment");
+                break;
+            case R.id.NavEsyaIslemleri:
+                transaction.replace(R.id.ContentFrame, new EsyaFragment(), "EsyaFragment");
+                break;
+            case R.id.NavDepoIslemleri:
+                transaction.replace(R.id.ContentFrame, new EsyaDepoFragment(), "EsyaDepoFragment");
                 break;
             case R.id.NavCikisYap:
                 SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

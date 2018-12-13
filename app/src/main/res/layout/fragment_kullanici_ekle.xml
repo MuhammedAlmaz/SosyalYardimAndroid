@@ -27,7 +27,7 @@
             android:textSize="14sp"
             app:met_baseColor="@color/editTextBaslikRengi"
             app:met_floatingLabel="highlight"
-            
+
             app:met_primaryColor="?colorAccent"
             app:met_singleLineEllipsis="true" />
 
@@ -43,7 +43,7 @@
             android:textSize="14sp"
             app:met_baseColor="@color/editTextBaslikRengi"
             app:met_floatingLabel="highlight"
-            
+
             app:met_primaryColor="?colorAccent"
             app:met_singleLineEllipsis="true" />
 
@@ -59,7 +59,7 @@
             android:textSize="14sp"
             app:met_baseColor="@color/editTextBaslikRengi"
             app:met_floatingLabel="highlight"
-            
+
             app:met_primaryColor="?colorAccent"
             app:met_singleLineEllipsis="true" />
 
@@ -132,18 +132,18 @@
 
         <com.beardedhen.androidbootstrap.BootstrapButton
 
-            android:id="@+id/BtnKullaniciGuncelle"
+            android:id="@+id/BtnKullaniciEkle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="30dp"
-            android:text="Kullanıcı Güncelle"
+            android:text="Kullanıcı Ekle"
             app:bootstrapBrand="primary"
             app:bootstrapSize="lg"
             app:buttonMode="regular"
             app:roundedCorners="true"
             app:showOutline="true"
-            tools:text="Kullanıcı Güncelle" />
+            tools:text="Kullanıcı Ekle" />
     </LinearLayout>
 
 

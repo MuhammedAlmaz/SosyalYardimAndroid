@@ -7,8 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.nfc.Tag;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,53 +22,53 @@ import android.view.ViewGroup;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.muhammedalmaz.sosyalyardim.R;
-import com.muhammedalmaz.sosyalyardim.adaptorler.RecyclerViewKullaniciListeAdapter;
+import com.muhammedalmaz.sosyalyardim.adaptorler.RecyclerViewIhtiyacSahibiListeAdapter;
 import com.muhammedalmaz.sosyalyardim.api.APIClient;
 import com.muhammedalmaz.sosyalyardim.api.APIInterface;
 import com.muhammedalmaz.sosyalyardim.ekstralar.HesapBilgileri;
 import com.muhammedalmaz.sosyalyardim.fonksiyonlar.DialogMesajlari;
-import com.muhammedalmaz.sosyalyardim.pojo.Kullanici;
-import com.muhammedalmaz.sosyalyardim.pojo.KullaniciListeSonuc;
-import com.muhammedalmaz.sosyalyardim.pojo.KullaniciSilmeSonuc;
+import com.muhammedalmaz.sosyalyardim.pojo.IhtiyacSahibi;
+import com.muhammedalmaz.sosyalyardim.pojo.IhtiyacSahibiListeSonuc;
+import com.muhammedalmaz.sosyalyardim.pojo.IhtiyacSahibiSilmeSonuc;
+
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class KullaniciFragment extends Fragment {
+public class IhtiyacSahibiFragment extends Fragment {
 
-    String TAG=KullaniciFragment.class.getName();
+
+    String TAG=IhtiyacSahibiFragment.class.getName();
     APIInterface apiInterface;
-    RecyclerViewKullaniciListeAdapter recyclerViewKullaniciListeAdapter;
-    RecyclerView recyclerKullaniciListe;
+    RecyclerViewIhtiyacSahibiListeAdapter recyclerViewIhtiyacSahibiListeAdapter;
+    RecyclerView recyclerIhtiyacSahibiListe;
     DialogMesajlari dialogMesajlari;
 
-    public KullaniciFragment() {
-        // Required empty public constructor
+    public IhtiyacSahibiFragment() {
+
     }
 
-    public void kullanicileriYukle() {
-        Call<KullaniciListeSonuc> kullaniciListeSonucCall = apiInterface.kullaniciListe(HesapBilgileri.androidToken);
-        kullaniciListeSonucCall.enqueue(new Callback<KullaniciListeSonuc>() {
+    public void ihtiyacSahibiYukle() {
+        Log.i(TAG,HesapBilgileri.androidToken);
+        Call<IhtiyacSahibiListeSonuc> ihtiyacSahibiListeSonucCall = apiInterface.ihtiyacSahibiListe(HesapBilgileri.androidToken);
+        ihtiyacSahibiListeSonucCall.enqueue(new Callback<IhtiyacSahibiListeSonuc>() {
             @Override
-            public void onResponse(Call<KullaniciListeSonuc> call, Response<KullaniciListeSonuc> response) {
-                KullaniciListeSonuc kullaniciListeSonuc = response.body();
-                if (!dialogMesajlari.hataMesajiGoster(kullaniciListeSonuc.hataKodu)) {
-                    recyclerViewKullaniciListeAdapter = new RecyclerViewKullaniciListeAdapter(kullaniciListeSonuc.kullaniciListe, getActivity());
+            public void onResponse(Call<IhtiyacSahibiListeSonuc> call, Response<IhtiyacSahibiListeSonuc> response) {
+                IhtiyacSahibiListeSonuc ihtiyacSahibiListeSonuc = response.body();
+                if (!dialogMesajlari.hataMesajiGoster(ihtiyacSahibiListeSonuc.hataKodu)) {
+                    recyclerViewIhtiyacSahibiListeAdapter = new RecyclerViewIhtiyacSahibiListeAdapter(ihtiyacSahibiListeSonuc.ihtiyacSahibiListe, getActivity());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    recyclerKullaniciListe.setLayoutManager(mLayoutManager);
-                    recyclerKullaniciListe.setItemAnimator(new DefaultItemAnimator());
-                    recyclerKullaniciListe.setAdapter(recyclerViewKullaniciListeAdapter);
+                    recyclerIhtiyacSahibiListe.setLayoutManager(mLayoutManager);
+                    recyclerIhtiyacSahibiListe.setItemAnimator(new DefaultItemAnimator());
+                    recyclerIhtiyacSahibiListe.setAdapter(recyclerViewIhtiyacSahibiListeAdapter);
                 }
 
             }
 
             @Override
-            public void onFailure(Call<KullaniciListeSonuc> call, Throwable t) {
+            public void onFailure(Call<IhtiyacSahibiListeSonuc> call, Throwable t) {
                 Log.e(TAG,"Hata Oldu");
                 Log.e(TAG,t.getMessage());
                 call.cancel();
@@ -77,18 +77,19 @@ public class KullaniciFragment extends Fragment {
         });
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View fragmentView= inflater.inflate(R.layout.fragment_kullanici, container, false);
+
+        View fragmentView= inflater.inflate(R.layout.fragment_ihtiyac_sahibi, container, false);
 
 
 
-        recyclerKullaniciListe = fragmentView.findViewById(R.id.RecyclerKullaniciListe);
+        recyclerIhtiyacSahibiListe = fragmentView.findViewById(R.id.RecyclerIhtiyacSahibiListe);
         apiInterface = APIClient.getClient().create(APIInterface.class);
         dialogMesajlari = new DialogMesajlari(getActivity());
-        kullanicileriYukle();
+        ihtiyacSahibiYukle();
 
         ItemTouchHelper.SimpleCallback simpleCallbackSil = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -99,27 +100,27 @@ public class KullaniciFragment extends Fragment {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition();
-                final Kullanici kullanici = recyclerViewKullaniciListeAdapter.getItem(position);
+                final IhtiyacSahibi ihtiyacSahibi = recyclerViewIhtiyacSahibiListeAdapter.getItem(position);
                 if (direction == ItemTouchHelper.LEFT) {
-                    recyclerViewKullaniciListeAdapter.listeyiGuncelle();
-                    dialogMesajlari.evetHayirDialogGoster("Kullanıcıyı Silmek Istediğinizden Emin Misiniz", new SweetAlertDialog.OnSweetClickListener() {
+                    recyclerViewIhtiyacSahibiListeAdapter.listeyiGuncelle();
+                    dialogMesajlari.evetHayirDialogGoster("Şubeyi Silmek Istediğinizden Emin Misiniz", new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
                             sweetAlertDialog.dismissWithAnimation();
-                            Call<KullaniciSilmeSonuc> kullaniciSilmeSonucCall = apiInterface.kullaniciSil(HesapBilgileri.androidToken
-                                    , kullanici.getKullaniciID());
-                            kullaniciSilmeSonucCall.enqueue(new Callback<KullaniciSilmeSonuc>() {
+                            Call<IhtiyacSahibiSilmeSonuc> ihtiyacSahibiSilmeSonucCall = apiInterface.ihtiyacSahibiSil(HesapBilgileri.androidToken
+                                    , ihtiyacSahibi.getIhtiyacSahibiID());
+                            ihtiyacSahibiSilmeSonucCall.enqueue(new Callback<IhtiyacSahibiSilmeSonuc>() {
                                 @Override
-                                public void onResponse(Call<KullaniciSilmeSonuc> call, Response<KullaniciSilmeSonuc> response) {
-                                    KullaniciSilmeSonuc kullaniciListeSonuc = response.body();
-                                    if (!dialogMesajlari.hataMesajiGoster(kullaniciListeSonuc.hataKodu)) {
-                                        kullanicileriYukle();
+                                public void onResponse(Call<IhtiyacSahibiSilmeSonuc> call, Response<IhtiyacSahibiSilmeSonuc> response) {
+                                    IhtiyacSahibiSilmeSonuc ihtiyacSahibiListeSonuc = response.body();
+                                    if (!dialogMesajlari.hataMesajiGoster(ihtiyacSahibiListeSonuc.hataKodu)) {
+                                        ihtiyacSahibiYukle();
                                         dialogMesajlari.basariliIslemDialogGoster();
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<KullaniciSilmeSonuc> call, Throwable t) {
+                                public void onFailure(Call<IhtiyacSahibiSilmeSonuc> call, Throwable t) {
                                     call.cancel();
                                     dialogMesajlari.hataMesajiGoster();
                                 }
@@ -172,9 +173,9 @@ public class KullaniciFragment extends Fragment {
                     fragmentManager
                             .beginTransaction()
                             .replace(
-                                    R.id.ContentFrame, new KullaniciDuzenleFragment(
-                                            recyclerViewKullaniciListeAdapter.getItem(position))
-                                    , "KullaniciDuzenleFragment"
+                                    R.id.ContentFrame, new IhtiyacSahibiDuzenleFragment(
+                                            recyclerViewIhtiyacSahibiListeAdapter.getItem(position))
+                                    , "IhtiyacSahibiDuzenleFragment"
                             ).commit();
                 }
             }
@@ -208,22 +209,22 @@ public class KullaniciFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelperSil = new ItemTouchHelper(simpleCallbackSil);
         ItemTouchHelper itemTouchHelperDuzenle = new ItemTouchHelper(simpleCallbackDuzenle);
-        itemTouchHelperSil.attachToRecyclerView(recyclerKullaniciListe);
-        itemTouchHelperDuzenle.attachToRecyclerView(recyclerKullaniciListe);
+        itemTouchHelperSil.attachToRecyclerView(recyclerIhtiyacSahibiListe);
+        itemTouchHelperDuzenle.attachToRecyclerView(recyclerIhtiyacSahibiListe);
 
-        ((BootstrapButton)fragmentView.findViewById(R.id.BtnKullaniciEkle)).setOnClickListener(new View.OnClickListener() {
+        ((BootstrapButton)fragmentView.findViewById(R.id.BtnIhtiyacSahibiEkle)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager
                         .beginTransaction()
                         .replace(
-                                R.id.ContentFrame, new KullaniciEkleFragment(), "KullaniciEkleFragment"
+                                R.id.ContentFrame, new IhtiyacSahibiEkleFragment(), "IhtiyacSahibiEkleFragment"
                         ).commit();
             }
         });
-        
-        
+
+
         return fragmentView;
     }
 

@@ -7,6 +7,16 @@ public class Kullanici {
     private String kullaniciAdi;
     @SerializedName("KullaniciSoyadi")
     private String kullaniciSoyadi;
+    @SerializedName("EPosta")
+    private String ePosta;
+    @SerializedName("TelegramKullaniciAdi")
+    private String telegramKullaniciAdi;
+    @SerializedName("TCKimlikNo")
+    private String tcKimlikNo;
+    @SerializedName("Merkezde")
+    private int merkezde;
+    @SerializedName("Onayli")
+    private int onayli;
     @SerializedName("Tel")
     private String tel;
     @SerializedName("Adres")
@@ -17,6 +27,46 @@ public class Kullanici {
     private int sehirId;
     @SerializedName("KullaniciID")
     private int kullaniciID;
+
+    public String getePosta() {
+        return ePosta;
+    }
+
+    public void setePosta(String ePosta) {
+        this.ePosta = ePosta;
+    }
+
+    public String getTelegramKullaniciAdi() {
+        return telegramKullaniciAdi;
+    }
+
+    public void setTelegramKullaniciAdi(String telegramKullaniciAdi) {
+        this.telegramKullaniciAdi = telegramKullaniciAdi;
+    }
+
+    public String getTcKimlikNo() {
+        return tcKimlikNo;
+    }
+
+    public void setTcKimlikNo(String tcKimlikNo) {
+        this.tcKimlikNo = tcKimlikNo;
+    }
+
+    public int getMerkezde() {
+        return merkezde;
+    }
+
+    public void setMerkezde(int merkezde) {
+        this.merkezde = merkezde;
+    }
+
+    public int getOnayli() {
+        return onayli;
+    }
+
+    public void setOnayli(int onayli) {
+        this.onayli = onayli;
+    }
 
     public int getKullaniciID() {
         return kullaniciID;

@@ -9,4 +9,33 @@ public class KullaniciBilgileri {
     public String androidToken;
     @SerializedName("KullaniciSoyadi")
     public String kullaniciSoyadi;
+    @SerializedName("YetkiKullaniciListesi")
+    public int yetkiKullaniciListesi;
+    @SerializedName("YetkiKullaniciEkle")
+    public int yetkiKullaniciEkle;
+    @SerializedName("YetkiKullaniciSil")
+    public int yetkiKullaniciSil;
+    @SerializedName("YetkiKullaniciDuzenle")
+    public int yetkiKullaniciDuzenle;
+    @SerializedName("YetkiSubeListesi")
+    public int yetkiSubeListesi;
+    @SerializedName("YetkiSubeEkle")
+    public int yetkiSubeEkle;
+    @SerializedName("YetkiSubeSil")
+    public int yetkiSubeSil;
+    @SerializedName("YetkiSubeDuzenle")
+    public int yetkiSubeDuzenle;
+    @SerializedName("YetkiSubeDetay")
+    public int yetkiSubeDetay;
+
+
+
+
+
+
+
+
+
+
+
 }
